@@ -23,7 +23,10 @@ public class Programa {
                     System.out.println("Mostrando informe...\n");
                     
                     break;
-
+                case "3":
+                    System.out.println("Realizando envío...\n");
+                    enviar();
+                    break;
                 case "X":
                 case "x":
                     repetirMenu = false;
@@ -45,6 +48,7 @@ public class Programa {
         System.out.println("APLICACION DE PAQUETERÍA");
         System.out.println("1. Registrar envío");
         System.out.println("2. Ver informe de envíos");
+        System.out.println("3. Realizar envío");
         System.out.println("x. Salir");
         System.out.print("Opción: ");
         return sc.nextLine();  // Devuelve lo que el usuario escribió
@@ -67,6 +71,37 @@ public class Programa {
             System.out.println("Registro OK\n");
         } catch (Exception excepcion) {
             System.out.println("Registro KO\n");
+        }
+    }
+    public static void enviar() {
+        System.out.println("\nRealizar Envío");
+        System.out.print("\tNúmero de envío: ");
+        String numero = sc.nextLine();
+
+        // Buscar el envío
+        Envio envio = null;
+        for (int i = 0; i < iEnvios; i++) {
+            if (envios[i].numero.equals(numero)) {
+                envio = envios[i];
+                break;
+            }
+        }
+
+        if (envio == null) {
+            System.out.println("Envío no encontrado\n");
+            return;
+        }
+
+        System.out.print("\tDirección de envío: ");
+        String direccion = sc.nextLine();
+
+        Furgonetas furgoneta = new Furgonetas();
+        Boolean exito = furgoneta.realizar(envio, direccion);
+
+        if (exito) {
+            System.out.println("Envío realizado con éxito\n");
+        } else {
+            System.out.println("Error al realizar el envío\n");
         }
     }
 }
